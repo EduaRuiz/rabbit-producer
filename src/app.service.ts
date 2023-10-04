@@ -25,11 +25,11 @@ export class AppService {
   }
 
   publishOneOnFanoutExchange(message: string): string {
-    this.amqpConnection.publish('fanout_exchange', 'fanout.route.one', message);
+    this.amqpConnection.publish('fanout_exchange', 'fanout.route.one', message); //el consumer debe ignorar el routingKey
     return 'Message sent';
   }
   publishTwoOnFanoutExchange(message: string): string {
-    this.amqpConnection.publish('fanout_exchange', 'fanout.route.two', message);
+    this.amqpConnection.publish('fanout_exchange', 'fanout.route.two', message); //el consumer debe ignorar el routingKey
     return 'Message sent';
   }
 }

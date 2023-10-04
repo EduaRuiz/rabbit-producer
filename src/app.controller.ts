@@ -17,7 +17,7 @@ export class AppController {
   }
   @Post('topic_exchange/all/:message')
   publishTopicAllExchange(@Param('message') message: string): string {
-    return this.appService.publishTopicTwoExchange(message);
+    return this.appService.publishTopicAllExchange(message);
   }
 
   @Post('direct_exchange/:message')
