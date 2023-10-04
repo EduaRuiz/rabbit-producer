@@ -1,30 +1,27 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     RabbitMQModule.forRoot(RabbitMQModule, {
-      name: 'RABBITMQ_CONNECTION',
+      // name: 'RABBITMQ_CONNECTION',
       exchanges: [
+        // {
+        //   name: 'test',
+        //   type: 'topic',
+        //   createExchangeIfNotExists: true,
+        //   options: {
+        //     durable: false, //por defecto es true
+        //     autoDelete: true, //por defecto es false
+        //     internal: true, //por defecto es false
+        //   },
+        // },
         {
-          name: 'test',
+          name: 'topic_exchange',
           type: 'topic',
           createExchangeIfNotExists: true,
-          options: {
-            durable: false,
-            autoDelete: true,
-            internal: true,
-          },
-        },
-        {
-          name: 'topic_exchange_1',
-          type: 'topic',
-          createExchangeIfNotExists: true,
-        },
-        {
-          name: 'topic_exchange_2',
-          type: 'topic',
         },
         {
           name: 'direct_exchange',
@@ -40,7 +37,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     }),
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [AppService],
   exports: [],
 })
 export class AppModule {}

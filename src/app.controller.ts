@@ -1,28 +1,36 @@
 import { Controller, Param, Post } from '@nestjs/common';
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { AppService } from './app.service';
 
 @Controller('producer')
 @Controller('messages')
 export class AppController {
-  constructor(private readonly amqpConnection: AmqpConnection) {}
+  constructor(private readonly appService: AppService) {}
 
-  @Post('topic_exchange_1/:message')
-  publishOnTopicExchangeOne(@Param('message') message: string): void {
-    this.amqpConnection.publish('topic_exchange_1', 'topic-route', message, {});
+  @Post('topic_exchange/one/:message')
+  publishTopicOneExchange(@Param('message') message: string): string {
+    return this.appService.publishTopicOneExchange(message);
   }
 
-  @Post('topic_exchange_2/:message')
-  publishOnTopicExchangeTwo(@Param('message') message: string): void {
-    this.amqpConnection.publish('topic_exchange_2', 'topic-route', message);
+  @Post('topic_exchange/two/:message')
+  publishTopicTwoExchange(@Param('message') message: string): string {
+    return this.appService.publishTopicTwoExchange(message);
+  }
+  @Post('topic_exchange/all/:message')
+  publishTopicAllExchange(@Param('message') message: string): string {
+    return this.appService.publishTopicTwoExchange(message);
   }
 
   @Post('direct_exchange/:message')
-  publishOnDirectExchange(@Param('message') message: string): void {
-    this.amqpConnection.publish('direct_exchange', 'direct-route', message);
+  publishDirectExchange(@Param('message') message: string): string {
+    return this.appService.publishDirectExchange(message);
   }
 
-  @Post('fanout_exchange/:message')
-  publishOnFanoutExchange(@Param('message') message: string): void {
-    this.amqpConnection.publish('fanout_exchange', 'fanout-route', message);
+  @Post('fanout_exchange/one/:message')
+  publishOneOnFanoutExchange(@Param('message') message: string): string {
+    return this.appService.publishOneOnFanoutExchange(message);
+  }
+  @Post('fanout_exchange/two/:message')
+  publishTwoOnFanoutExchange(@Param('message') message: string): string {
+    return this.appService.publishTwoOnFanoutExchange(message);
   }
 }
